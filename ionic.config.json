@@ -1,0 +1,7 @@
+{
+  "name": "ledger-playground",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
