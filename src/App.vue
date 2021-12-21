@@ -27,7 +27,7 @@
 import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
 import { defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { home } from 'ionicons/icons'
+import { home, hardwareChip } from 'ionicons/icons'
 import logo from '../public/assets/icon/icon.svg'
 import { initStore } from "./store"
 
@@ -55,6 +55,11 @@ export default defineComponent({
         title: 'PlayGround',
         url: '/',
         mdIcon: home
+      },
+      {
+        title: 'Bitcoin',
+        url: '/bitcoin',
+        mdIcon: hardwareChip
       }
     ];
     

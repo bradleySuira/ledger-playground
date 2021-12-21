@@ -9,6 +9,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/playground',
     component: () => import ('../views/Playground/Playground.vue')
+  },
+  {
+    path: '/bitcoin',
+    component: () => import ('../views/Bitcoin/BitcoinTests.vue')
   }
 ]
 
