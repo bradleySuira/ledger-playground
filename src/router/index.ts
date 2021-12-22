@@ -11,8 +11,8 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import ('../views/Playground/Playground.vue')
   },
   {
-    path: '/bitcoin',
-    component: () => import ('../views/Bitcoin/BitcoinTests.vue')
+    path: '/bitcoin/send-transaction',
+    component: () => import ('../views/Bitcoin/SendTransaction.vue')
   }
 ]
 

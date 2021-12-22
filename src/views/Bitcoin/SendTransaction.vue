@@ -24,24 +24,55 @@
           </ion-card-header>
 
           <ion-card-content>
-            <ion-item>
-              <ion-label position="stacked">Send Address</ion-label>
-              <ion-input v-model="sendAddress"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked">BTC Amount</ion-label>
-              <ion-input v-model="amount"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-button @click="send">Send()</ion-button>
-            </ion-item>
-            <ion-item>
-              <p>
-                <code>
-                  {{ 'WIP' }}
-                </code>
-              </p>
-            </ion-item>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label position="stacked">Send Address</ion-label>
+                    <ion-input v-model="sendAddress"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked">BTC Amount</ion-label>
+                    <ion-input v-model="amount"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-button @click="send">Send()</ion-button>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <p>
+                    Addresses:
+                    <code>
+                      {{ addresses }}
+                    </code>
+                  </p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <p>
+                    Balance:
+                    <code>
+                      {{ balance }}
+                    </code>
+                  </p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <p>
+                    Result:
+                    <code>
+                      {{ result }}
+                    </code>
+                  </p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-card-content>
         </ion-card>
       </div>
@@ -65,13 +96,24 @@ import {
   IonToolbar,
   IonLabel,
   IonInput,
-  IonItem
+  IonItem,
+  loadingController
 } from '@ionic/vue'
 import { defineComponent } from 'vue'
 import { createBtcClient } from './utils'
 import BN from 'bignumber.js'
+import { Address } from '@liquality/types'
 
-export default defineComponent({
+interface BitcoinSendTransactionData {
+  sendAddress: string;
+  addresses: Address[];
+  amount: number;
+  balance: BN;
+  result: any;
+}
+const client = createBtcClient()
+
+export default defineComponent<BitcoinSendTransactionData>({
   name: 'BitcoinTests',
   components: {
     IonButtons,
@@ -90,34 +132,39 @@ export default defineComponent({
     IonInput,
     IonItem
   },
-  data: function () {
+  data: () => {
     return {
       sendAddress: 'tb1qjktj4vqe9p6zlj0ef8euygye7tt4qqp38crmyw',
-      amount: 0.0000094
+      addresses: [],
+      amount: 940,
+      balance: new BN(0),
+      result: null
     }
   },
   methods: {
     async send () {
-      const client = createBtcClient()
+
       const provider = client._providers[0] as any
       const originalEstimateGas = provider.estimateGas
-      const addresses = await client.wallet.getAddresses()
-      console.log('addresses', addresses)
-      const balance = await client.chain.getBalance(addresses)
-      console.log('balance', balance.toString())
+
+      const loading = await loadingController.create({})
+        
+      await loading.present();
       try {
-        const tx = await client.chain.sendTransaction({
+         this.addresses = await client.wallet.getAddresses()
+      this.balance = await client.chain.getBalance(this.addresses)
+        this.result = await client.chain.sendTransaction({
           to: this.sendAddress,
           value: new BN(this.amount),
           data: undefined,
           fee: undefined
         })
-        console.log(tx)
-      } catch (errr) {
-        console.error(errr)
-      }
-      finally {
+      } catch (err) {
+        this.result = err
+      } finally {
         (client._providers[0] as any).estimateGas = originalEstimateGas
+        await loading.dismiss()
+        console.log('result', this.result)
       }
     }
   }

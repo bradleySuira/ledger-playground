@@ -18,7 +18,7 @@ export enum AddressSearchType {
   EXTERNAL_OR_CHANGE
 }
 
-class CustomBitcoinLedgerProvider extends BitcoinLedgerProvider {
+export class CustomBitcoinLedgerProvider extends BitcoinLedgerProvider {
     async getInputsForAmount(
         _targets: bitcoin.OutputTarget[],
         feePerByte: number,
@@ -83,7 +83,7 @@ class CustomBitcoinLedgerProvider extends BitcoinLedgerProvider {
           }
   
           const utxoBalance = utxos.reduce((a, b) => a + (b.value || 0), 0)
-          debugger
+
           const transactionCounts: bitcoin.AddressTxCounts = await this.getMethod('getAddressTransactionCounts')(addrList)
   
           if (!feePerByte) feePerByte = await feePerBytePromise
@@ -142,7 +142,7 @@ class CustomBitcoinLedgerProvider extends BitcoinLedgerProvider {
           addressIndex += numAddressPerCall
         }
   
-        // throw new Error('Not enough balance')
+        throw new Error('Not enough balance')
       }
 }
 
@@ -162,7 +162,7 @@ export function createBtcClient() {
     )
     
 
-    const ledgerProvider = new CustomBitcoinLedgerProvider({
+    const ledgerProvider = new BitcoinLedgerProvider({
         network,
         addressType: bitcoin.AddressType.BECH32,
         Transport,

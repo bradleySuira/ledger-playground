@@ -57,8 +57,8 @@ export default defineComponent({
         mdIcon: home
       },
       {
-        title: 'Bitcoin',
-        url: '/bitcoin',
+        title: 'Bitcoin - SendTransaction',
+        url: '/bitcoin/send-transaction',
         mdIcon: hardwareChip
       }
     ];
