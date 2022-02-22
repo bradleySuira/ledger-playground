@@ -16,8 +16,8 @@ export function createETHClient() {
     const ledgerProvider = new EthereumLedgerProvider(
         {
             network: ethereumNetwork,
-            derivationPath: "",
-            Transport,
+            derivationPath: "m/44'/60'/0'/0/0",
+            Transport: Transport,
             hardfork: 'london',
         },
     )

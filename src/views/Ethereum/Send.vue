@@ -154,12 +154,10 @@ export default defineComponent<ETHSendTransactionData>({
       try {
         const _amount = currencyToUnit(assets['ETH'], this.amount).toString()
          this.addresses = await client.wallet.getAddresses()
-      this.balance = await client.chain.getBalance(this.addresses)
+        this.balance = await client.chain.getBalance(this.addresses)
         this.result = await client.chain.sendTransaction({
           to: this.sendAddress,
-          value: new BN(_amount),
-          data: undefined,
-          fee: undefined
+          value: new BN(_amount)
         })
       } catch (err) {
         this.result = err
