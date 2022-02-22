@@ -103,8 +103,9 @@ import { defineComponent } from 'vue'
 import { createETHClient } from './utils'
 import BN from 'bignumber.js'
 import { Address } from '@liquality/types'
-import TransportWebHID from '@ledgerhq/hw-transport-webhid'
 import { assets, currencyToUnit } from '@liquality/cryptoassets'
+    
+const client = createETHClient()
 
 interface ETHSendTransactionData {
   sendAddress: string;
@@ -144,7 +145,6 @@ export default defineComponent<ETHSendTransactionData>({
   },
   methods: {
     async send () {
-      const client = createETHClient()
       const provider = client._providers[0] as any
       const originalEstimateGas = provider.estimateGas
 
@@ -157,7 +157,9 @@ export default defineComponent<ETHSendTransactionData>({
         this.balance = await client.chain.getBalance(this.addresses)
         this.result = await client.chain.sendTransaction({
           to: this.sendAddress,
-          value: new BN(_amount)
+          value: new BN(_amount),
+          data: undefined,
+          fee: undefined
         })
       } catch (err) {
         this.result = err

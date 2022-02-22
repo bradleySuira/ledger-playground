@@ -9,7 +9,7 @@ import Transport from '@ledgerhq/hw-transport-webhid'
 
 export function createETHClient() {
     const ethereumNetwork = EthereumNetworks.ethereum_mainnet
-    const rpcApi = `https://ropsten.infura.io/v3/${buildConfig.infuraApiKey}`
+    const rpcApi = `https://mainnet.infura.io/v3/${buildConfig.infuraApiKey}` //`https://ropsten.infura.io/v3/${buildConfig.infuraApiKey}`
     const ethClient = new Client()
     const feeProvider = new EthereumEIP1559FeeProvider({ uri: rpcApi })
     ethClient.addProvider(new EthereumRpcProvider({ uri: rpcApi }))
