@@ -13,6 +13,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/bitcoin/send-transaction',
     component: () => import ('../views/Bitcoin/SendTransaction.vue')
+  },
+  {
+    path: '/ethereum/send-transaction',
+    component: () => import ('../views/Ethereum/Send.vue')
   }
 ]
 

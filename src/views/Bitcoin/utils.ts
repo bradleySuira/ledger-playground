@@ -1,4 +1,4 @@
-import buildConfig from './build-config'
+import buildConfig from '@/build-config'
 import { BitcoinEsploraBatchApiProvider } from '@liquality/bitcoin-esplora-batch-api-provider'
 import { BitcoinLedgerProvider } from '@liquality/bitcoin-ledger-provider'
 import { BitcoinRpcFeeProvider } from '@liquality/bitcoin-rpc-fee-provider'

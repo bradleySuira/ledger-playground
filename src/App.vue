@@ -11,7 +11,7 @@
   
             <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
               <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
-                <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
+                <ion-icon slot="start" :md="p.mdIcon"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
@@ -27,7 +27,7 @@
 import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
 import { defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { home, hardwareChip } from 'ionicons/icons'
+import { home, hardwareChip, logoUsd } from 'ionicons/icons'
 import logo from '../public/assets/icon/icon.svg'
 import { initStore } from "./store"
 
@@ -60,6 +60,11 @@ export default defineComponent({
         title: 'Bitcoin - SendTransaction',
         url: '/bitcoin/send-transaction',
         mdIcon: hardwareChip
+      },
+      {
+        title: 'Ethereum - SendTransaction',
+        url: '/ethereum/send-transaction',
+        mdIcon: logoUsd
       }
     ];
     
